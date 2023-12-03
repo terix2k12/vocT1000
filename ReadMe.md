@@ -27,6 +27,7 @@ sudo docker docker-compose up -d
 		- postmancollection / restapi tests
 		- php junittests?
 		- react frontend
+		- api documentation and swagger
 		 
 
 ## Functions
