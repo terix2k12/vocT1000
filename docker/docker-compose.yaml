@@ -1,0 +1,16 @@
+# ./docker-compose.yml
+
+version: '3'
+
+services:
+
+  t1000webService:
+    image: t1000-phpserv:7.4.6-apache
+    build:
+      context: ./
+      dockerfile: Dockerfile-php
+    container_name: t1000webContainer
+    volumes:
+      - ./../vocserver:/var/www/html/
+    ports:
+      - "8100:80"
