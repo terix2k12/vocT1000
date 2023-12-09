@@ -19,8 +19,7 @@ sudo docker docker-compose up -d
 # TODO
 	- Infrastructure
 		- connect with github
-		- set up rest api
-		- with mock database
+		- set up rest api (no .php in the end)
 		- set up php backend
 		- connect database to backend
 		- use flyway to manage database
