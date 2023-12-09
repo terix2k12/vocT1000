@@ -14,3 +14,24 @@ services:
       - ./../vocserver:/var/www/html/
     ports:
       - "8100:80"
+
+  t1000Db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_pw_shh
+      MYSQL_DATABASE: t1000_data_db
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
+    ports:
+      - "9906:3306"
+    volumes:
+      - ./t1000sqldata:/var/lib/mysql
+
+  t1000flyway:
+    image: flyway/flyway
+    command: migrate
+    volumes:
+      - ../dbscripts:/flyway/sql
+      - ../dbscripts:/flyway/conf
+    depends_on:
+      - t1000Db
