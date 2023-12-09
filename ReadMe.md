@@ -20,9 +20,6 @@ sudo docker docker-compose up -d
 	- Infrastructure
 		- connect with github
 		- set up rest api (no .php in the end)
-		- set up php backend
-		- connect database to backend
-		- use flyway to manage database
 		- postmancollection / restapi tests
 		- php junittests?
 		- react frontend
