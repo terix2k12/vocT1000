@@ -3,9 +3,18 @@ import './App.css';
 
 import React, { useState, useEffect } from 'react';
 
+
 function App() {
 
- const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
+
+    const globalKeyPress = e => console.log(e);
+
+    useEffect( () => {
+        document.addEventListener('keyup', globalKeyPress)
+        // TODO how to remove eventlistener...?
+    },[]);
+
    useEffect(() => {
       fetch('http://localhost:8100')
          .then((response) => response.json())
