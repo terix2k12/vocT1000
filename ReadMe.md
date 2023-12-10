@@ -22,7 +22,9 @@ sudo docker docker-compose up -d
 		- set up rest api (no .php in the end)
 		- postmancollection / restapi tests
 		- php junittests?
-		- react frontend
+		- frontend use backend
+		- react ui system.... bootstrap oder antd?
+		- react build into nginx....
 		- api documentation and swagger
 		 
 
