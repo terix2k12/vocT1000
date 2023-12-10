@@ -4,9 +4,16 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 
 
+function Card({cardData}) {
+
+    return (<div className="basic">{cardData.name} {cardData.shelf} </div>);
+}
+
 function App() {
 
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState({});
+
+    const [activeCard, setActiveCard] = useState({ name: "Void", shelf: -1});
 
     const globalKeyPress = e => console.log(e);
 
@@ -19,37 +26,35 @@ function App() {
       fetch('http://localhost:8100')
          .then((response) => response.json())
          .then((data) => {
-            console.log(data);
+            console.log("updated from fetch");
             setPosts(data);
+            setActiveCard( data.data[0]  )
          })
          .catch((err) => {
             console.log(err.message);
          });
    }, []);
 
-   let foo =  posts.data ?
-          posts.data.map(d => d.name) :
-          "ERROR";
+   function promote(e)  {
+       setActiveCard(posts.data[1] );
+   }
+
+    function demote(e)  {
+        setActiveCard(posts.data[0] );
+    }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        {
-           foo
-        }
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <header className="App-header">
+
+            <Card cardData={ activeCard } />
+
+            <button onClick={promote}>Promote</button>
+            <button onClick={demote}>Demote</button>
+            <button>Skip</button>
+            <button>Solve</button>
+
+        </header>
     </div>
   );
 }

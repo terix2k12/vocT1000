@@ -7,7 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.basic {
+  background-color: antiquewhite;
+  color: #282c34;
+  padding: 50px;
+  border-radius: 10px;
+  margin: 3px;
 }
