@@ -1,12 +1,26 @@
-import logo from './logo.svg';
+import React, {useState, useEffect } from 'react';
 import './App.css';
-
-import React, { useState, useEffect } from 'react';
-
 
 function Card({cardData, showBack}) {
 
-    return (<div className="basic">{ showBack? cardData.name.split("").reverse().join("") : cardData.name} {cardData.shelf} </div>);
+    return (
+        <div className="basic">
+
+            <div className= {showBack?"flip-card flipped":"flip-card"} >
+                Box: {cardData.shelf}
+                <div className="flip-card-inner">
+                    <div className="flip-card-front">
+                        {cardData.name}
+                    </div>
+                    <div className="flip-card-back">
+                        {cardData.name.split("").reverse().join("")}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    );
 }
 
 function App() {
