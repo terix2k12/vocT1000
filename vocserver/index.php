@@ -4,26 +4,28 @@
   phpinfo();
   */
 
-  	function dbdata() {
+// Credentials as specified in docker-compose.yml
+$servername = 't1000Db';
+$username = 'devuser';
+$dbpassword = 'devpass';
+$dbname = 't1000_data_db';
 
-    	$content = array();
+  	function nextCard() {
 
-    	// Credentials as specified in docker-compose.yml
-    	$servername = 't1000Db';
-    	$username = 'devuser';
-    	$dbpassword = 'devpass';
-    	$dbname = 't1000_data_db';
+        global $servername, $username, $dbpassword, $dbname;
+        $content = array();
 
     	$mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
 
-    	$stmt = $mysqli->prepare("SELECT * FROM EXAMPLEDATA");
+    	$stmt = $mysqli->prepare("SELECT ID, COLLECTION, BOX, CARD FROM TRAINING ORDER BY LAST_UPDATED ASC LIMIT 1");
     	$stmt->execute();
-    	$stmt->bind_result($dId, $dName, $dShelf);
+    	$stmt->bind_result($dId, $dCollection, $dBox, $dCard);
 
 	    while($row = $stmt->fetch()) {
 	        $item["id"] = $dId;
-	        $item["name"] = $dName;
-	        $item["shelf"] = $dShelf;
+	        $item["collection"] = $dCollection;
+	        $item["box"] = $dBox;
+            $item["card"] = $dCard;
 	        $content[] = $item;
 	    }
 
@@ -31,28 +33,19 @@
     	return $content;
   	}
 
-	function mockdata() {
-		$art1["id"]=1;
-		$art1["name"]="cat";
-		$art1["shelf"]=1;
+function save($data_back) {
 
-		$art2["id"]=2;
-		$art2["name"]="dog";
-		$art2["shelf"]=1;
+    global $servername, $username, $dbpassword, $dbname;
+    $content = array();
 
-		$art3["id"]=3;
-		$art3["name"]="car";
-		$art3["shelf"]=2;
+    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
+    $query = "UPDATE TRAINING SET BOX = ". $data_back["box"] ." WHERE ID = ". $data_back["id"];
+    $stmt = $mysqli->prepare($query);
+    $stmt->execute();
 
-		return [
-			$art1,
-			$art2,
-			$art3
-			];
-	}
-
-$response["name"] = "T-1000 API";
-$response["version"] = 1.0;
+    mysqli_close($mysqli);
+    return $content;
+}
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uriExploded = explode( '/', $uri );
@@ -65,11 +58,46 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 
 if($uriCommand == "hindi") {
-    $box = intval($uriExploded[2]);
-    echo json_encode( dbdata()[$box] );
-} else {
-    echo json_encode($response);
+    $cardCommand = $uriExploded[2];
+
+    if($cardCommand == 'next') {
+        echo json_encode( nextCard() );
+        return;
+    }
+
+    if($cardCommand == 'promote') {
+        $data_back = json_decode(file_get_contents('php://input'));
+        $box = $data_back->{"box"};
+        $id = $data_back->{"id"};
+        $collection = $data_back->{"collection"};
+        $card= $data_back->{"card"};
+        $new_data["id"] = $id;
+        $new_data["box"] = $box + 1;
+        $new_data["card"] = $card;
+        $new_data["collection"] = $collection;
+        echo json_encode( save($data_back) );
+        return;
+    }
+
+    if($cardCommand == 'demote') {
+        $data_back = json_decode(file_get_contents('php://input'));
+        $box = $data_back->{"box"};
+        $id = $data_back->{"id"};
+        $collection = $data_back->{"collection"};
+        $card= $data_back->{"card"};
+        $new_data["id"] = $id;
+        $new_data["box"] = $box - 1;
+        $new_data["card"] = $card;
+        $new_data["collection"] = $collection;
+        echo json_encode( save($new_data) );
+        return;
+    }
+
 }
+
+$response["name"] = "T-1000 API";
+$response["version"] = 1.0;
+echo json_encode($response);
 
 //header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 //header("Access-Control-Max-Age: 3600");
