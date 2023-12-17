@@ -1,0 +1,6 @@
+ALTER TABLE `CARDS` CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+ALTER TABLE `CARDS` CHANGE `FRONT` `FRONT` VARCHAR(500)
+    CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+
+INSERT INTO `CARDS` VALUES (null, 'कंप्यूटर', 'backside');

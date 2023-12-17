@@ -39,7 +39,7 @@ function getCardById($idValue) {
     global $servername, $username, $dbpassword, $dbname;
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
-
+    $mysqli->set_charset("utf8");
     $stmt = $mysqli->prepare("SELECT ID, FRONT, BACK FROM CARDS WHERE ID = " . $idValue);
     $stmt->execute();
     $stmt->bind_result($dId, $dFront, $dBack);
