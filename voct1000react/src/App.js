@@ -1,25 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import './App.css';
-
-function Card({cardData, showBack}) {
-    return (
-        <div className="basic">
-
-            <div className= {showBack?"flip-card flipped":"flip-card"} >
-                Card #{cardData.id}
-                <div className="flip-card-inner">
-                    <div className="flip-card-front">
-                        {cardData.front}
-                    </div>
-                    <div className="flip-card-back">
-                        {cardData.back.split("").reverse().join("")}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    );
-}
+import Card from "./Card";
 
 function App() {
 
@@ -27,7 +8,6 @@ function App() {
     const [activeBox, setActiveBox] = useState(-1);
     const [activeCard, setActiveCard] = useState({ id: -1, front: "front", back: "back"});
     const [activeTraining, setActiveTraining] = useState({ id: -1, collection: -1, box: -1, card: -1});
-
 
    useEffect(() => {
    }, []);
