@@ -7,61 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.activeBox {
-  width: 300px;
-  height: 50px;
-  background-color: #61dafb;
-}
 
-.inactiveBox {
-  width: 300px;
-  height: 50px;
-  background-color: cadetblue;
-}
 
-.basic {
-  background-color: antiquewhite;
-  color: #282c34;
-  padding: 50px;
-  border-radius: 10px;
-  margin: 3px;
-}
 
-.flip-card {
-  background-color: transparent;
-  width: 300px;
-  height: 200px;
-  /*border: 1px solid #f1f1f1;*/
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-}
 
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
 
-/* Flip when this class is added */
-.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
-
-.flip-card-front {
-  background-color: #bbb;
-}
-
-.flip-card-back {
-  background-color: dodgerblue;
-  transform: rotateY(180deg);
-}

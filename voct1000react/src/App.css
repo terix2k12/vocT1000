@@ -1,16 +1,43 @@
+.boxContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100px;
+  background-color: #282c34;
+  justify-content: center;
+}
+
+.activeBox {
+  width: 100px;
+  height: 80px;
+  background-color: #61dafb;
+
+  text-align: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-left: 10px;
+}
+
+.inactiveBox {
+  width: 80px;
+  height: 50px;
+  background-color: cadetblue;
+
+  text-align: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-left: 10px;
+}
+
+
+
+
+
+
+
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -26,13 +53,4 @@
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
