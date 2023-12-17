@@ -24,15 +24,17 @@ npm run start
 # TODO
 	- Infrastructure
 		- connect with github
+		- switch to typescript
 		- set up rest api (no .php in the end)
 		- postmancollection / restapi tests
 		- php junittests?
-		- frontend use backend
+		- sound positive and negative feedback, plus mute option
 		- react ui system.... bootstrap oder antd?
 		- react build into nginx....
 		- use prettier, lint and other typescript essentials
 		- api documentation and swagger
 		- setup a ci/cd for frontend pipeline and backendpipeline
+		- test unicode symbols in database...
 		 
 
 ## Functions
