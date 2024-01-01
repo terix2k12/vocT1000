@@ -16,7 +16,7 @@ services:
       - "8100:80"
 
   t1000Db:
-    image: mysql:5.7
+    image: mysql:5.7.16
     environment:
       MYSQL_ROOT_PASSWORD: my_secret_pw_shh
       MYSQL_DATABASE: t1000_data_db
