@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import Card from "./Card";
+import Menu from "./Menu";
+import Boxes from "./Boxes";
 
 function App() {
 
@@ -97,11 +99,13 @@ function App() {
 
     return (
         <>
-            <Boxes activeBox=activeBox />
-            <div className="App"
+            <div className="pane"
                  onKeyUp={handleKey}
                  tabIndex={0}>
-                <header className="App-header">
+
+            <Boxes activeBox={activeBox} setBox={setBox} />
+               
+                <div className="content">
 
 
                     {(activeBox == -1)
@@ -113,12 +117,12 @@ function App() {
                     <button onClick={solve}>Flip</button>
                     <button onClick={skipCard}>Skip</button>
 
-                </header>
+                </div>
 
+            <Menu />
             </div>
         </>
-    )
-        ;
+    );
 }
 
 export default App;
