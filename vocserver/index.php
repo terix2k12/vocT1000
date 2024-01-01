@@ -10,9 +10,9 @@ $username = 'devuser';
 $dbpassword = 'devpass';
 $dbname = 't1000_data_db';
 
-include_once "TrainingDAO.php";
+include_once "lib/TrainingDAO.php";
 
-include_once "CardDAO.php";
+include_once "lib/CardDAO.php";
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uriExploded = explode( '/', $uri );
