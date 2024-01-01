@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-function Login({setUser}) {
+function Login({setUser, setAppState}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -23,6 +23,7 @@ function Login({setUser}) {
             if(data.success === "Login successful!") {
                 // alert('Login OK');
                 setUser(username);
+                setAppState("signin");
             } else {
                 alert('Login failed.');
             }

@@ -4,12 +4,14 @@ import './App.css';
 
 import Boxes from "./Boxes";
 import CardBox from "./CardBox";
+import CardEditor from "./CardEditor";
 import Login from "./Login";
 import Menu from "./Menu";
 
 function App() {
 
     const [user, setUser] = useState("");
+    const [appState, setAppState] = useState("signout");
 
     useEffect(() => {}, []);
 
@@ -36,10 +38,15 @@ function App() {
     }
 
     // let content = (<CardBox />);
-    let content = (<Login setUser={setUser}/>);
-
-    if(user === "foouser") {
-        content = (<p>Hello foouser, select an action!</p>)
+    let content;
+    if( appState === "loading") {
+        content = (<p>Loading...</p>);
+    } else if( appState === "signout" ) {
+        content = (<Login setUser={setUser} setAppState={setAppState} />);
+    } else if( appState === "adding" ) {
+        content = (<CardEditor />);
+    } else { 
+        content = (<p>Hello foouser, select an action!</p>);
     }
 
     return (
@@ -51,7 +58,7 @@ function App() {
             <div className="content">
                  { content }
             </div>
-            <Menu user={user} setUser={setUser} />
+            <Menu user={user} setUser={setUser} setAppState={setAppState}/>
         </div>
     );
 }

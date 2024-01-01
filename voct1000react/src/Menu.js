@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './Menu.css';
 
-function Menu({user, setUser}) {
+function Menu({user, setUser, setAppState}) {
 
     function sendLogout() {
         fetch('http://localhost:8100/logout')
@@ -10,6 +10,7 @@ function Menu({user, setUser}) {
             if(data.info === "Logout successful!") {
                 // alert('Login OK');
                 setUser("");
+                setAppState("signout");
             } else {
                 alert('Logout failed.');
             }
@@ -26,7 +27,9 @@ function Menu({user, setUser}) {
                     : "Logout" 
                 }
             </div>
-            <div className={ user=== "" ? "disabledMenuItem" : "inactiveMenuItem" }>Add Card</div>
+            <div className={ user=== "" ? "disabledMenuItem" : "inactiveMenuItem" }
+                onClick={ () => setAppState("adding") }  
+            >Add Card</div>
         </div>
     );
 
