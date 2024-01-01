@@ -10,81 +10,9 @@ $username = 'devuser';
 $dbpassword = 'devpass';
 $dbname = 't1000_data_db';
 
-  	function nextCard($idValue) {
+include_once "TrainingDAO.php";
 
-        global $servername, $username, $dbpassword, $dbname;
-        $content = array();
-
-    	$mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
-
-        $query = "SELECT ID, COLLECTION, BOX, CARD FROM TRAINING WHERE BOX = ".$idValue." ORDER BY LAST_UPDATED ASC LIMIT 1";
-    	$stmt = $mysqli->prepare($query);
-    	$stmt->execute();
-    	$stmt->bind_result($dId, $dCollection, $dBox, $dCard);
-
-	    while($row = $stmt->fetch()) {
-	        $item["id"] = $dId;
-	        $item["collection"] = $dCollection;
-	        $item["box"] = $dBox;
-            $item["card"] = $dCard;
-	        $content[] = $item;
-	    }
-
-    	mysqli_close($mysqli);
-    	return $content[0];
-  	}
-
-function getCardById($idValue) {
-
-    global $servername, $username, $dbpassword, $dbname;
-
-    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
-    $mysqli->set_charset("utf8");
-    $stmt = $mysqli->prepare("SELECT ID, FRONT, BACK FROM CARDS WHERE ID = " . $idValue);
-    $stmt->execute();
-    $stmt->bind_result($dId, $dFront, $dBack);
-    $stmt->fetch();
-
-    $item["id"] = $dId;
-    $item["front"] = $dFront;
-    $item["back"] = $dBack;
-
-    mysqli_close($mysqli);
-    return $item;
-}
-
-function getTrainingById($idValue) {
-
-    global $servername, $username, $dbpassword, $dbname;
-
-    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
-
-    $stmt = $mysqli->prepare("SELECT ID, COLLECTION, CARD, BOX FROM TRAINING WHERE ID = " . $idValue);
-    $stmt->execute();
-    $stmt->bind_result($dId, $dCollection, $dCard, $dBox);
-    $stmt->fetch();
-
-    $item["id"] = $dId;
-    $item["collection"] = $dCollection;
-    $item["card"] = $dCard;
-    $item["box"] = $dBox;
-
-    mysqli_close($mysqli);
-    return $item;
-}
-
-function updateTraining($data_back) {
-
-    global $servername, $username, $dbpassword, $dbname;
-
-    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
-    $query = "UPDATE TRAINING SET BOX = ". $data_back["box"] ." WHERE ID = ". $data_back["id"];
-    $stmt = $mysqli->prepare($query);
-    $stmt->execute();
-
-    mysqli_close($mysqli);
-    return;
-}
+include_once "CardDAO.php";
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uriExploded = explode( '/', $uri );
@@ -107,7 +35,7 @@ if($uriCommand == "hindi") {
 
     if($cardCommand == 'get') {
         $idValue = $uriExploded[3];
-        echo json_encode( getCardById($idValue) );
+        echo json_encode( readCardById($idValue) );
         return;
     }
 
@@ -116,7 +44,8 @@ if($uriCommand == "hindi") {
         $training = getTrainingById($idValue);
         $training["box"] =  $training["box"] + 1;
         updateTraining($training);
-        echo json_encode( true );
+        $updatedBE = getTrainingById($idValue);
+        echo json_encode( $updatedBE );
         return;
     }
 
@@ -131,11 +60,15 @@ if($uriCommand == "hindi") {
 
     if($cardCommand == 'skip') {
         $idValue = $uriExploded[3];
+
         $training = getTrainingById($idValue);
         $training["box"] =  $training["box"] - 1;
         updateTraining($training);
+
+        // $training = getTrainingById($idValue);
         $training["box"] =  $training["box"] + 1;
         updateTraining($training);
+
         echo json_encode( true );
         return;
     }
