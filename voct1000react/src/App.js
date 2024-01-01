@@ -1,23 +1,22 @@
 import React, {useState, useEffect} from 'react';
+
 import './App.css';
 
-import CardBox from "./CardBox";
-import Menu from "./Menu";
 import Boxes from "./Boxes";
+import CardBox from "./CardBox";
+import Login from "./Login";
+import Menu from "./Menu";
 
 function App() {
 
     const [user, setUser] = useState("");
 
-    
-    useEffect(() => {
-    }, []);
+    useEffect(() => {}, []);
 
     function setBox(box) {
         // setActiveBox(box);
         // updateTraining(box);
     }
-
 
     function handleKey(e) {
         // console.log(e);
@@ -37,23 +36,23 @@ function App() {
     }
 
     // let content = (<CardBox />);
-    let content = (<p>Please log in!</p>);
+    let content = (<Login setUser={setUser}/>);
+
+    if(user === "foouser") {
+        content = (<p>Hello foouser, select an action!</p>)
+    }
 
     return (
         <div className="pane"
                  onKeyUp={handleKey}
                  tabIndex={0}>
 
-            <Boxes activeBox={1}   />
-               
-                <div className="content">
-
+            <Boxes activeBox={0} user={user} setBox={setBox} />
+            <div className="content">
                  { content }
-
-                </div>
-
-            <Menu />
             </div>
+            <Menu user={user} setUser={setUser} />
+        </div>
     );
 }
 
