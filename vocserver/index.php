@@ -4,6 +4,66 @@
   phpinfo();
   */
 
+session_start();
+
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Credentials: true");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    header("Access-Control-Allow-Methods: OPTIONS,GET,POST");
+    $success["info"] = "Preflight information.";
+    echo json_encode( $success );
+    return;
+}
+
+
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uriExploded = explode( '/', $uri );
+$uriCount = count($uriExploded);
+
+$uriBase = $uriExploded[0]; // Should be ''
+$uriCommand = htmlspecialchars($uriExploded[1]);
+
+if($uriCommand == "login") {
+
+    $data_back = json_decode(file_get_contents('php://input'));
+    $user = $data_back->{"username"};
+    $pwd = $data_back->{"password"};
+
+    if($user == "foouser" && $pwd == "qwertz") {
+        header("HTTP/1.1 200 OK");
+        $success["success"] = "Login successful!";
+        $_SESSION['userid'] = 'secret-sausage';
+        echo json_encode( $success );
+        return;
+    } else {
+        header("HTTP/1.1 401 Access denied.");
+        $error["error"] = "Invalid credentials!";
+        echo json_encode( $error );
+        return;
+    }
+
+} else {
+    if(!isset($_SESSION['userid'])) {
+        header("HTTP/1.1 403 Access denied.");
+        $error["error"] = "Missing Session!";
+        echo json_encode( $_SESSION );
+        return;
+    }
+}
+
+if($uriCommand == "logout") {
+    session_destroy();
+
+    header("HTTP/1.1 200 OK");
+    $success["info"] = "Logout successful!";
+    echo json_encode( $success );
+    return;
+}
+
 // Credentials as specified in docker-compose.yml
 $servername = 't1000Db';
 $username = 'devuser';
@@ -14,28 +74,8 @@ include_once "lib/TrainingDAO.php";
 
 include_once "lib/CardDAO.php";
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uriExploded = explode( '/', $uri );
-$uriCount = count($uriExploded);
-
-$uriBase = $uriExploded[0]; // Should be ''
-$uriCommand = $uriExploded[1];
-
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-
-if($uriCommand == "logout") {
-    header("HTTP/1.1 200 OK");
-    $success["info"] = "Logout successful!";
-    echo json_encode( $success );
-    return;
-}
-
-
-
 if($uriCommand == "card") {
-    $entityCommand = $uriExploded[2];
+    $entityCommand = htmlspecialchars($uriExploded[2]);
 
     if($entityCommand == "save") {
 
@@ -53,32 +93,6 @@ if($uriCommand == "card") {
     header("HTTP/1.1 404 Function unknown.");
     $error["error"] = "You did something wrong!";
     echo json_encode( $error );
-}
-
-if($uriCommand == "login") {
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-        header("HTTP/1.1 200 OK");
-        header("Access-Control-Allow-Methods: OPTIONS,POST");
-        $success["info"] = "Preflight information.";
-        echo json_encode( $success );
-        return;
-    }
-
-    $data_back = json_decode(file_get_contents('php://input'));
-    $user = $data_back->{"username"};
-    $pwd = $data_back->{"password"};
-
-    if($user == "foouser" && $pwd == "qwertz") {
-        header("HTTP/1.1 200 OK");
-        $success["success"] = "Login successful!";
-        echo json_encode( $success );
-        return;
-    } else {
-        header("HTTP/1.1 401 Access denied.");
-        $error["error"] = "Invalid credentials!";
-        echo json_encode( $error );
-        return;
-    }
 }
 
 if($uriCommand == "hindi") {
