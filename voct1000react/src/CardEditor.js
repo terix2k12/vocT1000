@@ -16,16 +16,17 @@ function CardEditor() {
     }
 
     function sendCard() {
-        fetch('http://localhost:8100/login',
+        fetch('http://localhost:8100/card/save',
               {
                 method: "POST",
                 body: JSON.stringify({
-                    username: front,
-                    password: back
+                    front: front,
+                    back: back
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
-                }
+                },
+                credentials: 'include'
               }
          )
         .then((response) => response.json())

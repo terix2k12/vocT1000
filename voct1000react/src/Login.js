@@ -15,10 +15,14 @@ function Login({setUser, setAppState}) {
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
-                }
+                },
+                credentials: 'include'
               }
          )
-        .then((response) => response.json())
+        .then((response) => {
+
+            return response.json();
+         })
         .then((data) => {
             if(data.success === "Login successful!") {
                 // alert('Login OK');
