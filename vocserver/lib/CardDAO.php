@@ -3,8 +3,31 @@
  * CRUD for Card
  */
 
-function createCard($card) {
+function createCard($data_back) {
+    global $servername, $username, $dbpassword, $dbname;
 
+    $front = $data_back->{"front"};
+    $back = $data_back->{"back"};
+    $card["front"] = $front;
+    $card["back"] = $back;
+
+    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
+    $mysqli->set_charset("utf8");
+
+    $query =  "INSERT INTO CARDS (FRONT, BACK) VALUES (?, ?);";
+
+    $stmt = $mysqli->prepare($query);
+    $i1 = $card["front"];
+    $i2 = $card["back"];
+    $stmt->bind_param("ss", $i1, $i2);
+    $stmt->execute();
+
+    $item["id"] = mysqli_insert_id($mysqli);
+    $item["front"] = htmlspecialchars($i1);
+    $item["back"] = htmlspecialchars($i2);
+
+    mysqli_close($mysqli);
+    return $item;
 }
 
 function readCardById($id) {

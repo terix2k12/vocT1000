@@ -1,5 +1,30 @@
 <?php
 
+function createTraining($training) {
+    global $servername, $username, $dbpassword, $dbname;
+
+    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
+    $mysqli->set_charset("utf8");
+
+    $query =  "INSERT INTO TRAINING (COLLECTION, BOX, CARD) VALUES (?, ?, ?);";
+
+    $collection = $training["collection"];
+    $box = $training["box"];
+    $card = $training["card"];
+
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("iii", $collection, $box, $card);
+    $stmt->execute();
+
+    $item["id"] = mysqli_insert_id($mysqli);
+    $item["collection"] = $collection;
+    $item["box"] = $box;
+    $item["card"] = $card;
+
+    mysqli_close($mysqli);
+    return $item;
+}
+
 function nextCard($idValue) {
 
     global $servername, $username, $dbpassword, $dbname;

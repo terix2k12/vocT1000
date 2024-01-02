@@ -32,6 +32,29 @@ if($uriCommand == "logout") {
     return;
 }
 
+
+
+if($uriCommand == "card") {
+    $entityCommand = $uriExploded[2];
+
+    if($entityCommand == "save") {
+
+        $data_back = json_decode(file_get_contents('php://input'));
+        $card = createCard($data_back);
+        $training["collection"] = 1;
+        $training["box"] = 1;
+        $training["card"] = $card["id"];
+
+        header("HTTP/1.1 200 OK");
+        echo json_encode( createTraining($training) );
+        return;
+    }
+
+    header("HTTP/1.1 404 Function unknown.");
+    $error["error"] = "You did something wrong!";
+    echo json_encode( $error );
+}
+
 if($uriCommand == "login") {
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         header("HTTP/1.1 200 OK");
@@ -104,20 +127,6 @@ if($uriCommand == "hindi") {
         updateTraining($training);
 
         echo json_encode( true );
-        return;
-    }
-
-    if($cardCommand == 'save') {
-        $data_back = json_decode(file_get_contents('php://input'));
-        $box = $data_back->{"box"};
-        $id = $data_back->{"id"};
-        $collection = $data_back->{"collection"};
-        $card= $data_back->{"card"};
-        $new_data["id"] = $id;
-        $new_data["box"] = $box - 1;
-        $new_data["card"] = $card;
-        $new_data["collection"] = $collection;
-        echo json_encode( save($new_data) );
         return;
     }
 
