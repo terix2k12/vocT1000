@@ -20,9 +20,14 @@ npm run start
 ```
 
 ## Project
+https://www.php.net/manual/en/session.idpassing.php
+
+Session cookies fall under the categorization of strictly necessary cookies under the General Data Protection Regulation (GDPR), applicable in the European Union and the UK. Strictly necessary cookies like session cookies are exempt from the consent requirements underlined in the GDPR. Therefore, session cookies are GDPR compliant. 
+
 
 # TODO
 	- Infrastructure
+		- OPTIONS request shoud include cookie (else backend has to start new session every time)
 		- connect with github
 		- switch to typescript
 		- set up rest api (no .php in the end)
