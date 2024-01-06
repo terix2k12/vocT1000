@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import './Menu.css';
+import {baseUrl} from './Tconfig';
 
 function Menu({user, setUser, setAppState}) {
 
     function sendLogout() {
-        fetch('http://localhost:8100/logout')
+        fetch(baseUrl + 'logout')
         .then((response) => response.json())
         .then((data) => {
             if(data.info === "Logout successful!") {

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './CardEditor.css';
+import {baseUrl} from './Tconfig';
 
 function CardEditor() {
 
@@ -16,7 +17,7 @@ function CardEditor() {
     }
 
     function sendCard() {
-        fetch('http://localhost:8100/card/save',
+        fetch(baseUrl + 'card/save',
               {
                 method: "POST",
                 body: JSON.stringify({

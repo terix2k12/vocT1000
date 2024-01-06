@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {baseUrl} from './Tconfig';
 
 function Login({setUser, setAppState}) {
 
@@ -6,7 +7,7 @@ function Login({setUser, setAppState}) {
     const [password, setPassword] = useState("");
 
     function sendLogin() {
-        fetch('http://localhost:8100/login',
+        fetch(baseUrl + 'login',
               {
                 method: "POST",
                 body: JSON.stringify({
