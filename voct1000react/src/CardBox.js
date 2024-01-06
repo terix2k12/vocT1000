@@ -1,17 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import './Boxes.css';
+import './CardBox.css';
 import Card from "./Card";
 
-function CardBox({ setBox}) {
+function CardBox({ activeBox }) {
 
     const [showBack, setShowBack] = useState(false);
-    const [activeBox, setActiveBox] = useState(-1);
-    const [activeCard, setActiveCard] = useState({id: -1, front: "front", back: "back"});
-    const [activeTraining, setActiveTraining] = useState({id: -1, collection: -1, box: -1, card: -1});
+    
+    const initCard = {id: -1, front: "ifront", back: "iback"};
+    const noCard = {id: 0, front: "front", back: "back"};
+    const [activeCard, setActiveCard] = useState(initCard);
+
+    const initTraining = {id: -1, collection: -1, box: -1, card: -1};
+    const [activeTraining, setActiveTraining] = useState(initTraining);
 
 
- function promote() {
-        fetch('http://localhost:8100/hindi/promote/' + activeTraining.id)
+    function promote() {
+        fetch('http://localhost:8100/training/promote/' + activeTraining.id,{
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => {
                 console.log("Promote successful");
@@ -20,7 +26,9 @@ function CardBox({ setBox}) {
     }
 
     function demote() {
-        fetch('http://localhost:8100/hindi/demote/' + activeTraining.id)
+        fetch('http://localhost:8100/training/demote/' + activeTraining.id,{
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => {
                 console.log("Demote successful");
@@ -28,13 +36,14 @@ function CardBox({ setBox}) {
             });
     }
 
-
     function solve() {
         setShowBack(!showBack);
     }
 
     function skipCard() {
-        fetch('http://localhost:8100/hindi/skip/' + activeTraining.id)
+        fetch('http://localhost:8100/training/skip/' + activeTraining.id,{
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => {
                 console.log("Skip successful");
@@ -42,8 +51,10 @@ function CardBox({ setBox}) {
             });
     }
 
-    function updateCard(data) {
-        fetch('http://localhost:8100/hindi/get/' + data.card)
+    function updateCard(cardId) {
+        fetch('http://localhost:8100/card/get/' + cardId, {
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data2) => {
                 console.log("updateCard " + data2);
@@ -54,16 +65,17 @@ function CardBox({ setBox}) {
     }
 
     function updateTraining(box) {
-        fetch('http://localhost:8100/hindi/next/' + box)
+        fetch('http://localhost:8100/training/next/' + box,
+                {credentials: 'include'})
             .then((response) => response.json())
             .then((data) => {
                 console.log("updateTraining " + data);
 
                 if (data) {
                     setActiveTraining(data);
-                    updateCard(data);
+                    updateCard(data.card);
                 } else {
-                    setActiveCard(undefined);
+                    setActiveCard(noCard);
                 }
 
             })
@@ -72,16 +84,24 @@ function CardBox({ setBox}) {
             });
     }
 
+    useEffect(() => {
+        updateTraining(activeBox);
+    }, [activeBox]);
+
     return (
         <>
-           {(activeBox == -1)
-                        ? "Please select a Box!"
-                        : <Card cardData={activeCard} showBack={showBack}/>}
 
-                    <button onClick={promote}>Promote</button>
-                    <button onClick={demote}>Demote</button>
-                    <button onClick={solve}>Flip</button>
-                    <button onClick={skipCard}>Skip</button>
+           {(activeCard.id == -1)
+                ? "Loading Card..."
+                : (activeCard.id == 0)
+                   ? "No cards in this box."
+                   : <Card cardData={activeCard} showBack={showBack}/>
+           }
+
+            <button onClick={promote}>Promote</button>
+            <button onClick={demote}>Demote</button>
+            <button onClick={solve}>Flip</button>
+            <button onClick={skipCard}>Skip</button>
         </>
     );
 
