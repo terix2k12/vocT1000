@@ -6,10 +6,13 @@
 
 session_start();
 
+include "lib/config.php";
+
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: ".$baseUrl);
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Credentials: true");
+header("Content-Security-Policy: default-src 'self'; img-src ".$baseUrl." 'self'");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("HTTP/1.1 200 OK");
@@ -19,13 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     return;
 }
 
-
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uriExploded = explode( '/', $uri );
 $uriCount = count($uriExploded);
 
 $uriBase = $uriExploded[0]; // Should be ''
-$uriCommand = htmlspecialchars($uriExploded[1]);
+$uriCommand = htmlspecialchars($uriExploded[1 + $offset]);
 
 if($uriCommand == "login") {
 
@@ -33,7 +35,7 @@ if($uriCommand == "login") {
     $user = $data_back->{"username"};
     $pwd = $data_back->{"password"};
 
-    if($user == "foouser" && $pwd == "qwertz") {
+    if($user == $musername && $pwd == $mpass) {
         header("HTTP/1.1 200 OK");
         $success["success"] = "Login successful!";
         $_SESSION['userid'] = 'secret-sausage';
@@ -64,18 +66,12 @@ if($uriCommand == "logout") {
     return;
 }
 
-// Credentials as specified in docker-compose.yml
-$servername = 't1000Db';
-$username = 'devuser';
-$dbpassword = 'devpass';
-$dbname = 't1000_data_db';
-
 include_once "lib/TrainingDAO.php";
 
 include_once "lib/CardDAO.php";
 
 if($uriCommand == "card") {
-    $entityCommand = htmlspecialchars($uriExploded[2]);
+    $entityCommand = htmlspecialchars($uriExploded[2+ $offset]);
 
     if($entityCommand == "save") {
 
@@ -91,7 +87,7 @@ if($uriCommand == "card") {
     }
 
     if($entityCommand == 'get') {
-        $idValue = htmlspecialchars($uriExploded[3]);
+        $idValue = htmlspecialchars($uriExploded[3+ $offset]);
         echo json_encode( readCardById($idValue) );
         return;
     }
@@ -102,16 +98,16 @@ if($uriCommand == "card") {
 }
 
 if($uriCommand == "training") {
-    $entityCommand = htmlspecialchars($uriExploded[2]);
+    $entityCommand = htmlspecialchars($uriExploded[2+ $offset]);
 
     if($entityCommand == 'next') {
-        $idValue = intval($uriExploded[3]);
+        $idValue = intval($uriExploded[3+ $offset]);
         echo json_encode( nextCard($idValue) );
         return;
     }
 
     if($entityCommand == 'promote') {
-        $idValue = htmlspecialchars($uriExploded[3]);
+        $idValue = htmlspecialchars($uriExploded[3+ $offset]);
         $training = getTrainingById($idValue);
         if( $training["box"] < 5) {
             $training["box"] =  $training["box"] + 1;
@@ -123,7 +119,7 @@ if($uriCommand == "training") {
     }
 
     if($entityCommand == 'demote') {
-        $idValue = htmlspecialchars($uriExploded[3]);
+        $idValue = htmlspecialchars($uriExploded[3+ $offset]);
         $training = getTrainingById($idValue);
         $training["box"] =  1;
         updateTraining($training);
@@ -132,7 +128,7 @@ if($uriCommand == "training") {
     }
 
     if($entityCommand == 'skip') {
-        $idValue = intval(htmlspecialchars($uriExploded[3]));
+        $idValue = intval(htmlspecialchars($uriExploded[3+ $offset]));
 
         $training = getTrainingById($idValue);
         $training["lts"] = date("Y-m-d H:i:s");
