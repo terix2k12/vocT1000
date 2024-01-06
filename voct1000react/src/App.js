@@ -12,11 +12,13 @@ function App() {
 
     const [user, setUser] = useState("");
     const [appState, setAppState] = useState("signout");
+    const [activeBox, setActiveBox] = useState(-1);
 
     useEffect(() => {}, []);
 
     function setBox(box) {
-        // setActiveBox(box);
+        setActiveBox(box);
+        setAppState('boxes');
         // updateTraining(box);
     }
 
@@ -37,7 +39,6 @@ function App() {
         }
     }
 
-    // let content = (<CardBox />);
     let content;
     if( appState === "loading") {
         content = (<p>Loading...</p>);
@@ -45,6 +46,8 @@ function App() {
         content = (<Login setUser={setUser} setAppState={setAppState} />);
     } else if( appState === "adding" ) {
         content = (<CardEditor />);
+    } else if( appState === "boxes" ){
+        content = (<CardBox activeBox = {activeBox} />)
     } else { 
         content = (<p>Hello foouser, select an action!</p>);
     }
@@ -54,7 +57,7 @@ function App() {
                  onKeyUp={handleKey}
                  tabIndex={0}>
 
-            <Boxes activeBox={0} user={user} setBox={setBox} />
+            <Boxes activeBox={activeBox} user={user} setBox={setBox} />
             <div className="content">
                  { content }
             </div>
