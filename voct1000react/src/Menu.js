@@ -19,7 +19,7 @@ function Menu({user, setUser, setAppState}) {
 
     return (
         <div className="menuBox">
-            <div className={ user=== "" ? "disabledMenuItem" : "inactiveMenuItem" }>All Cards</div>
+            <div className={  "disabledMenuItem"  }>All Cards</div>
             <div className={ user=== "" ? "activeMenuItem" : "inactiveMenuItem" } 
                 onClick={ sendLogout }>
                 { user === ""
