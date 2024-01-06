@@ -1,0 +1,9 @@
+.verti {
+	display: flex;
+	flex-direction: column;
+}
+
+.horiz {
+	display: flex;
+	`flex-direction: row;
+}

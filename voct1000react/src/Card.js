@@ -13,7 +13,9 @@ function Card({cardData, showBack}) {
                    {cardData.front}
                </div>
                <div className="flip-card-back">
-                   {cardData.back.split("").reverse().join("")}
+                   {cardData.back
+//.split("").reverse().join("")
+               }
                </div>
            </div>
                  </>

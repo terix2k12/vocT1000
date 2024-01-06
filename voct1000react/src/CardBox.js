@@ -88,22 +88,23 @@ function CardBox({ activeBox }) {
         updateTraining(activeBox);
     }, [activeBox]);
 
-    return (
-        <>
-
-           {(activeCard.id == -1)
-                ? "Loading Card..."
+    return (<>
+        <div className="horiz">
+         <button onClick={demote}>Demote</button>
+         <div className="verti">
+          <button onClick={solve}>Flip</button>
+           {
+            (activeCard.id == -1)
+                ? (<p>Loading Card...</p>)
                 : (activeCard.id == 0)
-                   ? "No cards in this box."
+                   ? (<p>No cards in this box.</p>)
                    : <Card cardData={activeCard} showBack={showBack}/>
            }
-
-            <button onClick={promote}>Promote</button>
-            <button onClick={demote}>Demote</button>
-            <button onClick={solve}>Flip</button>
-            <button onClick={skipCard}>Skip</button>
-        </>
-    );
+           <button onClick={skipCard}>Skip</button>
+          </div>
+          <button onClick={promote}>Promote</button>
+        </div>
+    </>);
 
 }
 
