@@ -90,57 +90,57 @@ if($uriCommand == "card") {
         return;
     }
 
+    if($entityCommand == 'get') {
+        $idValue = htmlspecialchars($uriExploded[3]);
+        echo json_encode( readCardById($idValue) );
+        return;
+    }
+
     header("HTTP/1.1 404 Function unknown.");
     $error["error"] = "You did something wrong!";
     echo json_encode( $error );
 }
 
-if($uriCommand == "hindi") {
-    $cardCommand = $uriExploded[2];
+if($uriCommand == "training") {
+    $entityCommand = htmlspecialchars($uriExploded[2]);
 
-    if($cardCommand == 'next') {
+    if($entityCommand == 'next') {
         $idValue = intval($uriExploded[3]);
         echo json_encode( nextCard($idValue) );
         return;
     }
 
-    if($cardCommand == 'get') {
-        $idValue = $uriExploded[3];
-        echo json_encode( readCardById($idValue) );
-        return;
-    }
-
-    if($cardCommand == 'promote') {
-        $idValue = $uriExploded[3];
+    if($entityCommand == 'promote') {
+        $idValue = htmlspecialchars($uriExploded[3]);
         $training = getTrainingById($idValue);
-        $training["box"] =  $training["box"] + 1;
+        if( $training["box"] < 5) {
+            $training["box"] =  $training["box"] + 1;
+        }
         updateTraining($training);
         $updatedBE = getTrainingById($idValue);
         echo json_encode( $updatedBE );
         return;
     }
 
-    if($cardCommand == 'demote') {
-        $idValue = $uriExploded[3];
+    if($entityCommand == 'demote') {
+        $idValue = htmlspecialchars($uriExploded[3]);
         $training = getTrainingById($idValue);
-        $training["box"] =  $training["box"] - 1;
+        $training["box"] =  1;
         updateTraining($training);
         echo json_encode( true );
         return;
     }
 
-    if($cardCommand == 'skip') {
-        $idValue = $uriExploded[3];
+    if($entityCommand == 'skip') {
+        $idValue = intval(htmlspecialchars($uriExploded[3]));
 
         $training = getTrainingById($idValue);
-        $training["box"] =  $training["box"] - 1;
-        updateTraining($training);
+        $training["lts"] = date("Y-m-d H:i:s");
+        // TODO how to set CURRENT_TIMESTAMP directly?
 
-        // $training = getTrainingById($idValue);
-        $training["box"] =  $training["box"] + 1;
-        updateTraining($training);
+        $result = updateTraining($training);
 
-        echo json_encode( true );
+        echo json_encode( $result );
         return;
     }
 
