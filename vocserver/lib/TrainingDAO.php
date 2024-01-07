@@ -25,25 +25,25 @@ function createTraining($training) {
     return $item;
 }
 
-function nextCard($idValue) {
+function nextCard($idValue, $collId) {
 
     global $servername, $username, $dbpassword, $dbname;
     $content = array();
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
 
-    $query = "SELECT ID, COLLECTION, BOX, CARD, LAST_UPDATED FROM TRAINING WHERE BOX = ? ORDER BY LAST_UPDATED ASC LIMIT 1";
+    $query = "SELECT ID, COLLECTION, BOX, CARD, LAST_UPDATED FROM TRAINING WHERE BOX = ? AND COLLECTION = ? ORDER BY LAST_UPDATED ASC LIMIT 1";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("i", $idValue);
+    $stmt->bind_param("ii", $idValue, $collId);
     $stmt->execute();
     $stmt->bind_result($dId, $dCollection, $dBox, $dCard, $dLTS);
 
     while($row = $stmt->fetch()) {
-        $item["id"] = $dId;
-        $item["collection"] = $dCollection;
-        $item["box"] = $dBox;
-        $item["card"] = $dCard;
-        $item["lts"] = $dLTS;
+        $item["id"] = intval($dId);
+        $item["collection"] = intval($dCollection);
+        $item["box"] = intval($dBox);
+        $item["card"] = intval($dCard);
+        $item["lts"] = htmlspecialchars($dLTS);
         $content[] = $item;
     }
 
@@ -64,10 +64,10 @@ function getTrainingById($idValue) {
     $stmt->fetch();
 
     $item["id"] = $dId;
-    $item["collection"] = $dCollection;
-    $item["card"] = $dCard;
-    $item["box"] = $dBox;
-    $item["lts"] = $dLTS;
+    $item["collection"] = intval($dCollection);
+    $item["card"] = intval($dCard);
+    $item["box"] = intval($dBox);
+    $item["lts"] = htmlspecialchars($dLTS);
 
     mysqli_close($mysqli);
     return $item;

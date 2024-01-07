@@ -8,8 +8,8 @@ function createCard($data_back) {
 
     $front = $data_back->{"front"};
     $back = $data_back->{"back"};
-    $card["front"] = $front;
-    $card["back"] = $back;
+    $card["front"] = htmlspecialchars($front);
+    $card["back"] = htmlspecialchars($back);
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
     $mysqli->set_charset("utf8");
@@ -46,9 +46,9 @@ function readCardById($id) {
     $stmt->bind_result($dId, $dFront, $dBack);
     $stmt->fetch();
 
-    $item["id"] = $dId;
-    $item["front"] = $dFront;
-    $item["back"] = $dBack;
+    $item["id"] = intval($dId);
+    $item["front"] = htmlspecialchars($dFront);
+    $item["back"] = htmlspecialchars($dBack);
 
     mysqli_close($mysqli);
     return $item;

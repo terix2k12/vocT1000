@@ -10,6 +10,7 @@ $baseUrl = "http://localhost:3000";
 $offset = 0;
 
 $musername = "foouser";
+$nusername = "baruser";
 $mpass = "qwertz";
 
 ?>

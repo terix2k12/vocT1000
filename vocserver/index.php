@@ -35,10 +35,10 @@ if($uriCommand == "login") {
     $user = $data_back->{"username"};
     $pwd = $data_back->{"password"};
 
-    if($user == $musername && $pwd == $mpass) {
+    if(($user == $nusername || $user == $musername) && $pwd == $mpass) {
         header("HTTP/1.1 200 OK");
         $success["success"] = "Login successful!";
-        $_SESSION['userid'] = 'secret-sausage';
+        $_SESSION['userid'] = $user;
         echo json_encode( $success );
         return;
     } else {
@@ -77,8 +77,10 @@ if($uriCommand == "card") {
 
         $data_back = json_decode(file_get_contents('php://input'));
         $card = createCard($data_back);
-        $training["collection"] = 1;
-        $training["box"] = 1;
+        $coll = $_SESSION['userid'] == $musername ? 1:2;
+        $training["collection"] = $coll;
+        $box = $_SESSION['userid'] == $musername ? 1:6;
+        $training["box"] = $box;
         $training["card"] = $card["id"];
 
         header("HTTP/1.1 200 OK");
@@ -102,14 +104,17 @@ if($uriCommand == "training") {
 
     if($entityCommand == 'next') {
         $idValue = intval($uriExploded[3+ $offset]);
-        echo json_encode( nextCard($idValue) );
+        $coll = $_SESSION['userid'] == $musername ? 1:2;
+        $box = $_SESSION['userid'] == $musername ? 0:5;
+        echo json_encode( nextCard($idValue+$box, $coll) );
         return;
     }
 
     if($entityCommand == 'promote') {
         $idValue = htmlspecialchars($uriExploded[3+ $offset]);
         $training = getTrainingById($idValue);
-        if( $training["box"] < 5) {
+        $max = $_SESSION['userid'] == $musername ? 5:10;
+        if( $training["box"] < $max) {
             $training["box"] =  $training["box"] + 1;
         }
         updateTraining($training);
@@ -121,7 +126,8 @@ if($uriCommand == "training") {
     if($entityCommand == 'demote') {
         $idValue = htmlspecialchars($uriExploded[3+ $offset]);
         $training = getTrainingById($idValue);
-        $training["box"] =  1;
+        $box = $_SESSION['userid'] == $musername ? 1:6;
+        $training["box"] =  $box;
         updateTraining($training);
         echo json_encode( true );
         return;
