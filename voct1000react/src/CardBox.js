@@ -92,9 +92,9 @@ function CardBox({activeBox}) {
         <div className="verti">
             <button className="skip" onClick={skipCard}>Skip</button>
             {
-                (activeCard.id == -1)
+                (activeCard.id === -1)
                     ? (<p>Loading Card...</p>)
-                    : (activeCard.id == 0)
+                    : (activeCard.id === 0)
                         ? (<p>No cards in this box.</p>)
                         : <Card cardData={activeCard} showBack={showBack}/>
             }

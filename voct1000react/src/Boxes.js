@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './Boxes.css';
 
 function Boxes({activeBox, setBox}) {
@@ -9,7 +9,7 @@ function Boxes({activeBox, setBox}) {
         } else {
             return "inactiveBox";
         }
-        return "disabledBox";
+        // return "disabledBox";
     }
 
     return (
