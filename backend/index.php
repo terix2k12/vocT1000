@@ -73,6 +73,12 @@ include_once "lib/CardDAO.php";
 if($uriCommand == "card") {
     $entityCommand = htmlspecialchars($uriExploded[2+ $offset]);
 
+    if($entityCommand == "between") {
+
+        echo json_encode( readAllCardsBetween(0, 100) );
+        return;
+    }
+
     if($entityCommand == "save") {
 
         $data_back = json_decode(file_get_contents('php://input'));

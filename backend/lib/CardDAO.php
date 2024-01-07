@@ -54,6 +54,36 @@ function readCardById($id) {
     return $item;
 }
 
+function readAllCardsBetween($idMin, $idMax) {
+
+    global $servername, $username, $dbpassword, $dbname;
+
+    $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
+    $mysqli->set_charset("utf8");
+
+    $query =  " SELECT ID, FRONT, BACK FROM CARDS WHERE ID >= ? AND ID <= ? ";
+
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("ii", $idMin, $idMax);
+
+    $stmt->execute();
+    $stmt->bind_result($dId, $dFront, $dBack);
+    $stmt->fetch();
+
+    $content[] = [];
+    $i = 0;
+    while($row = $stmt->fetch()) {
+        $item["id"] = intval($dId);
+        $item["front"] = htmlspecialchars($dFront);
+        $item["back"] = htmlspecialchars($dBack);
+        $content[$i] = $item;
+        $i = $i + 1;
+    }
+
+    mysqli_close($mysqli);
+    return $content;
+}
+
 function updateCard($card) {
 
 }
