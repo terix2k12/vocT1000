@@ -37,9 +37,11 @@ function readCardById($id) {
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
     $mysqli->set_charset("utf8");
 
-    $query =  "SELECT ID, FRONT, BACK FROM CARDS WHERE ID = " . $id;
+    $query =  "SELECT ID, FRONT, BACK FROM CARDS WHERE ID = ? ";
 
     $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $id);
+
     $stmt->execute();
     $stmt->bind_result($dId, $dFront, $dBack);
     $stmt->fetch();

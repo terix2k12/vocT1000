@@ -32,8 +32,9 @@ function nextCard($idValue) {
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
 
-    $query = "SELECT ID, COLLECTION, BOX, CARD, LAST_UPDATED FROM TRAINING WHERE BOX = ".$idValue." ORDER BY LAST_UPDATED ASC LIMIT 1";
+    $query = "SELECT ID, COLLECTION, BOX, CARD, LAST_UPDATED FROM TRAINING WHERE BOX = ? ORDER BY LAST_UPDATED ASC LIMIT 1";
     $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $idValue);
     $stmt->execute();
     $stmt->bind_result($dId, $dCollection, $dBox, $dCard, $dLTS);
 
@@ -56,7 +57,8 @@ function getTrainingById($idValue) {
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
 
-    $stmt = $mysqli->prepare("SELECT ID, COLLECTION, CARD, BOX, LAST_UPDATED FROM TRAINING WHERE ID = " . $idValue);
+    $stmt = $mysqli->prepare("SELECT ID, COLLECTION, CARD, BOX, LAST_UPDATED FROM TRAINING WHERE ID = ?");
+    $stmt->bind_param("i", $idValue);
     $stmt->execute();
     $stmt->bind_result($dId, $dCollection, $dCard, $dBox, $dLTS);
     $stmt->fetch();
