@@ -5,6 +5,7 @@ function Login({setUser, setAppState}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
 
     function sendLogin() {
         fetch(baseUrl + 'login',
@@ -46,9 +47,10 @@ function Login({setUser, setAppState}) {
     return (
         <div>
             <p>Please log in!</p>
-            User: <input onChange={ handleUsername } /><br/>
-            Password: <input onChange={ handlePassword }></input><br/>
+            User: <input onChange={handleUsername}/><br/>
+            Password: <input type={showPass ? 'text' : 'password'} onChange={handlePassword}></input><br/>
             <button onClick={sendLogin}>Login</button>
+            <button onClick={() => {setShowPass(!showPass)}}>Show Pwd</button>
         </div>
     );
 
