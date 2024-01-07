@@ -1,3 +1,11 @@
 .cardEdit {
 	background-color: grey;
 }
+
+input {
+	height: 40px;
+}
+
+button {
+	height: 30px;
+}

@@ -49,7 +49,7 @@ function App() {
     } else if( appState === "boxes" ){
         content = (<CardBox activeBox = {activeBox} />)
     } else { 
-        content = (<p>Hello foouser, select an action!</p>);
+        content = (<p>Hello user, select an action!</p>);
     }
 
     return (
@@ -57,7 +57,7 @@ function App() {
                  onKeyUp={handleKey}
                  tabIndex={0}>
 
-            <Boxes activeBox={activeBox} user={user} setBox={setBox} />
+            <Boxes activeBox={activeBox} setBox={setBox} />
             <div className="content">
                  { content }
             </div>

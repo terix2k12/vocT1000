@@ -3,10 +3,10 @@ import './CardBox.css';
 import Card from "./Card";
 import {baseUrl} from './Tconfig';
 
-function CardBox({ activeBox }) {
+function CardBox({activeBox}) {
 
     const [showBack, setShowBack] = useState(false);
-    
+
     const initCard = {id: -1, front: "ifront", back: "iback"};
     const noCard = {id: 0, front: "front", back: "back"};
     const [activeCard, setActiveCard] = useState(initCard);
@@ -15,7 +15,7 @@ function CardBox({ activeBox }) {
     const [activeTraining, setActiveTraining] = useState(initTraining);
 
     function promote() {
-        fetch(baseUrl + 'training/promote/' + activeTraining.id,{
+        fetch(baseUrl + 'training/promote/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -26,7 +26,7 @@ function CardBox({ activeBox }) {
     }
 
     function demote() {
-        fetch(baseUrl + 'training/demote/' + activeTraining.id,{
+        fetch(baseUrl + 'training/demote/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -41,7 +41,7 @@ function CardBox({ activeBox }) {
     }
 
     function skipCard() {
-        fetch(baseUrl + 'training/skip/' + activeTraining.id,{
+        fetch(baseUrl + 'training/skip/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -66,7 +66,7 @@ function CardBox({ activeBox }) {
 
     function updateTraining(box) {
         fetch(baseUrl + 'training/next/' + box,
-                {credentials: 'include'})
+            {credentials: 'include'})
             .then((response) => response.json())
             .then((data) => {
                 console.log("updateTraining " + data);
@@ -89,20 +89,23 @@ function CardBox({ activeBox }) {
     }, [activeBox]);
 
     return (<>
+        <div className="verti">
+            <button className="skip" onClick={skipCard}>Skip</button>
+            {
+                (activeCard.id == -1)
+                    ? (<p>Loading Card...</p>)
+                    : (activeCard.id == 0)
+                        ? (<p>No cards in this box.</p>)
+                        : <Card cardData={activeCard} showBack={showBack}/>
+            }
+            <button className="flip" onClick={solve}>Flip</button>
+
+        </div>
         <div className="horiz">
-         <button onClick={demote}>Demote</button>
-         <div className="verti">
-          <button onClick={solve}>Flip</button>
-           {
-            (activeCard.id == -1)
-                ? (<p>Loading Card...</p>)
-                : (activeCard.id == 0)
-                   ? (<p>No cards in this box.</p>)
-                   : <Card cardData={activeCard} showBack={showBack}/>
-           }
-           <button onClick={skipCard}>Skip</button>
-          </div>
-          <button onClick={promote}>Promote</button>
+
+            <button className="demote" onClick={demote}>Demote</button>
+            <button className="promote" onClick={promote}>Promote</button>
+
         </div>
     </>);
 

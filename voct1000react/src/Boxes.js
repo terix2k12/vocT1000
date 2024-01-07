@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import './Boxes.css';
 
-function Boxes({activeBox, user, setBox}) {
+function Boxes({activeBox, setBox}) {
 
     function calcClass(i) {
-        if(user === "") {
-            return "disabledBox";
-        }
         if(i === activeBox) {
             return "activeBox";
         } else {
             return "inactiveBox";
         }
+        return "disabledBox";
     }
 
     return (

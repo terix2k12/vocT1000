@@ -1,9 +1,30 @@
 .verti {
 	display: flex;
 	flex-direction: column;
+	width: 80%;
 }
 
 .horiz {
 	display: flex;
-	`flex-direction: row;
+	flex-direction: row;
+}
+
+.demote {
+	height: 60px;
+	margin: 10px;
+	width: 180px;
+}
+
+.promote {
+	height: 60px;
+	margin: 10px;
+	width: 180px;
+}
+
+.flip {
+	height: 60px;
+}
+
+.skip {
+	height: 60px;
 }
