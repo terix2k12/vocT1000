@@ -1,3 +1,5 @@
 docker/t1000sqldata
 vocserver/.idea
+frontend/.idea
+backend/.idea
 voct1000react/.idea
