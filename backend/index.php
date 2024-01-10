@@ -39,6 +39,14 @@ $uriCount = count($uriExploded);
 $uriBase = $uriExploded[0]; // Should be ''
 $uriCommand = htmlspecialchars($uriExploded[1 + $offset]);
 
+if($uriCommand == "logout") {
+    session_destroy();
+    header("HTTP/1.1 200 OK");
+    $success["info"] = "Logout successful!";
+    echo json_encode( $success );
+    return;
+}
+
 if($uriCommand == "login") {
     $data_back = json_decode(file_get_contents('php://input'));
     $user = $data_back->{"username"};
@@ -68,15 +76,6 @@ if($uriCommand == "login") {
         echo json_encode( $error );
         return;
     }
-}
-
-if($uriCommand == "logout") {
-    session_destroy();
-
-    header("HTTP/1.1 200 OK");
-    $success["info"] = "Logout successful!";
-    echo json_encode( $success );
-    return;
 }
 
 include_once "lib/TrainingDAO.php";
