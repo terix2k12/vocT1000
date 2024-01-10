@@ -14,6 +14,7 @@ function App() {
     const [user, setUser] = useState("");
     const [appState, setAppState] = useState("signout");
     const [activeBox, setActiveBox] = useState(-1);
+    const [activeCard, setActiveCard] = useState(null);
     const [allCards, setAllCards] = useState([]);
 
     useEffect(() => {}, []);
@@ -47,11 +48,14 @@ function App() {
     } else if( appState === "signout" ) {
         content = (<Login setUser={setUser} setAppState={setAppState} />);
     } else if( appState === "adding" ) {
-        content = (<CardEditor />);
+        content = (<CardEditor activeCard={activeCard} />);
     } else if( appState === "boxes" ){
         content = (<CardBox activeBox = {activeBox} />);
     } else if( appState === "allcards" ){
-        content = <CardList allCards={allCards} />
+        content = <CardList allCards={allCards}
+                            setAppState={setAppState}
+                            setActiveCard={setActiveCard}
+        />
     } else { 
         content = (<p>Hello user, select an action!</p>);
     }
@@ -67,7 +71,9 @@ function App() {
             </div>
             <Menu user={user} setUser={setUser}
                   setAppState={setAppState}
-                  setAllCards={setAllCards}/>
+                  setAllCards={setAllCards}
+                  setActiveCard={setActiveCard}
+            />
         </div>
     );
 }

@@ -1,26 +1,32 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './CardEditor.css';
 import {baseUrl} from './Tconfig';
 
-function CardEditor() {
+function CardEditor({activeCard}) {
 
     const [front, setFront] = useState("");
     const [back, setBack] = useState("");
 
     function doSave() {
         sendCard();
-        sendTraining();
     }
 
-    function sendTraining() {
-
-    }
+    useEffect(() => {
+        if(activeCard) {
+            setFront(activeCard.front);
+            setBack(activeCard.back);
+        } else {
+            setFront("");
+            setBack("");
+        }
+    }, [activeCard]);
 
     function sendCard() {
         fetch(baseUrl + 'card/save',
               {
                 method: "POST",
                 body: JSON.stringify({
+                    id: activeCard?.id ?? -1,
                     front: front,
                     back: back
                 }),
@@ -32,8 +38,8 @@ function CardEditor() {
          )
         .then((response) => response.json())
         .then((data) => {
-            if(data.success === "Login successful!") {
-                // alert('Login OK');
+            if(data.id > 0) {
+                alert('Save OK');
                 // setUser(username);
                 // setAppState("signin");
             } else {
@@ -52,9 +58,13 @@ function CardEditor() {
 
     return (
         <div className="cardEdit">
-            
-            Front: <input onChange={ handleFront } /> <br/>
-            Back: <input onChange={ handleBack } /> <br/>
+            Id: <p> { activeCard?.id ?? "n/a" } </p>
+            Front: <input onChange={ handleFront }
+               value={ front } />
+              <br/>
+            Back: <input onChange={ handleBack }
+            value={ back } />
+                <br/>
             <button onClick = { doSave } >Save</button>
         </div>
     );

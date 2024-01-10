@@ -2,7 +2,7 @@ import React from 'react';
 import './Menu.css';
 import {baseUrl} from './Tconfig';
 
-function Menu({user, setUser, setAppState, setAllCards}) {
+function Menu({user, setUser, setAppState, setAllCards, setActiveCard}) {
 
     function sendLogout() {
         fetch(baseUrl + 'logout')
@@ -45,7 +45,10 @@ function Menu({user, setUser, setAppState, setAllCards}) {
                 }
             </div>
             <div className={ user=== "" ? "disabledMenuItem" : "inactiveMenuItem" }
-                onClick={ () => setAppState("adding") }  
+                onClick={ () => {
+                    setActiveCard({});
+                    setAppState("adding")
+                } }
             >Add Card</div>
         </div>
     );
