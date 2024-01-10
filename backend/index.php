@@ -40,7 +40,6 @@ $uriBase = $uriExploded[0]; // Should be ''
 $uriCommand = htmlspecialchars($uriExploded[1 + $offset]);
 
 if($uriCommand == "login") {
-
     $data_back = json_decode(file_get_contents('php://input'));
     $user = $data_back->{"username"};
     $pwd = $data_back->{"password"};
@@ -62,12 +61,11 @@ if($uriCommand == "login") {
 
         return;
     }
-
 } else {
     if(!isset($_SESSION['userid'])) {
         header("HTTP/1.1 403 Access denied.");
         $error["error"] = "Missing Session!";
-        echo json_encode( $_SESSION );
+        echo json_encode( $error );
         return;
     }
 }
@@ -82,7 +80,6 @@ if($uriCommand == "logout") {
 }
 
 include_once "lib/TrainingDAO.php";
-
 include_once "lib/CardDAO.php";
 
 if($uriCommand == "card") {
