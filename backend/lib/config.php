@@ -13,4 +13,6 @@ $musername = "foouser";
 $nusername = "baruser";
 $mpass = "qwertz";
 
+$adminmail = 'mail@web.com';
+
 ?>

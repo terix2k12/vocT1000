@@ -14,6 +14,16 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Security-Policy: default-src 'self'; img-src ".$baseUrl." 'self'");
 
+include_once "lib/AccessDAO.php";
+
+$rc = readAccessCount();
+if( $rc > 5) {
+    header("HTTP/1.1 401 Access locked.");
+    $error["error"] = "App locked.";
+    echo json_encode( $error );
+    return;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("HTTP/1.1 200 OK");
     header("Access-Control-Allow-Methods: OPTIONS,GET,POST");
@@ -39,12 +49,17 @@ if($uriCommand == "login") {
         header("HTTP/1.1 200 OK");
         $success["success"] = "Login successful!";
         $_SESSION['userid'] = $user;
+        deleteAccessAll();
         echo json_encode( $success );
         return;
     } else {
         header("HTTP/1.1 401 Access denied.");
         $error["error"] = "Invalid credentials!";
         echo json_encode( $error );
+
+        mail($adminmail, 'Access with illegal Credentials '.$user, 'kwT');
+        createAccess();
+
         return;
     }
 
