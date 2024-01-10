@@ -8,18 +8,30 @@ function createCard($data_back) {
 
     $front = $data_back->{"front"};
     $back = $data_back->{"back"};
+    $id = $data_back->{"id"};
+
+    $card["id"] = intval(htmlspecialchars($id));
     $card["front"] = htmlspecialchars($front);
     $card["back"] = htmlspecialchars($back);
 
     $mysqli = new mysqli($servername, $username, $dbpassword, $dbname);
     $mysqli->set_charset("utf8");
 
-    $query =  "INSERT INTO CARDS (FRONT, BACK) VALUES (?, ?);";
+    if($id > 0) {
+        $query =  "UPDATE CARDS SET FRONT = ?, BACK = ? WHERE ID = ?";
+        $i1 = $card["front"];
+        $i2 = $card["back"];
+        $i3 = $card["id"];
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("ssi", $i1, $i2, $i3);
+    } else {
+        $query =  "INSERT INTO CARDS (FRONT, BACK) VALUES (?, ?);";
+        $i1 = $card["front"];
+        $i2 = $card["back"];
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("ss", $i1, $i2);
+    }
 
-    $stmt = $mysqli->prepare($query);
-    $i1 = $card["front"];
-    $i2 = $card["back"];
-    $stmt->bind_param("ss", $i1, $i2);
     $stmt->execute();
 
     $item["id"] = mysqli_insert_id($mysqli);
