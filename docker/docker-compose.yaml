@@ -5,7 +5,7 @@ version: '3'
 services:
 
   t1000webService:
-    image: t1000-phpserv:7.4.6-apache
+    image: t1000-phpserv:8.2.14-apache
     build:
       context: ./
       dockerfile: Dockerfile-php
