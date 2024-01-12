@@ -1,5 +1,6 @@
 .menuBox {
-  background-color: blue;
+  /*background-color: blue;*/
+  background-color: #282c34;
   flex-grow: 1;
 
   display: flex;
