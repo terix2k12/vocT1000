@@ -1,15 +1,17 @@
 import React from 'react';
 import './Boxes.css';
 
-function Boxes({activeBox, setBox}) {
+function Boxes({activeBox, setBox, user}) {
 
     function calcClass(i) {
-        if(i === activeBox) {
-            return "activeBox";
-        } else {
-            return "inactiveBox";
+        if(user === "") {
+            return "topbox disabled";
         }
-        // return "disabledBox";
+        if(i === activeBox) {
+            return "topbox active";
+        } else {
+            return "topbox inactive";
+        }
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {baseUrl} from './Tconfig';
+import "./Login.css"
 
 function Login({setUser, setAppState}) {
 
@@ -46,11 +47,12 @@ function Login({setUser, setAppState}) {
 
     return (
         <div>
-            <p>Please log in!</p>
+            <div className="loginform">
             User: <input onChange={handleUsername}/><br/>
             Password: <input type={showPass ? 'text' : 'password'} onChange={handlePassword}></input><br/>
-            <button onClick={sendLogin}>Login</button>
-            <button onClick={() => {setShowPass(!showPass)}}>Show Pwd</button>
+            </div>
+            <button className="lbutton" onClick={sendLogin}>Login</button>
+            <button className="lbutton" onClick={() => {setShowPass(!showPass)}}>Show</button>
         </div>
     );
 

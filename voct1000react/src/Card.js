@@ -3,11 +3,11 @@ import './Card.css';
 
 function Card({cardData, showBack}) {
 
-    let content = <><p>This box contains no cards.</p></>;
+    let content = <><p>No cards in box.</p></>;
 
     if (cardData) {
         content = <>
-            Card #{cardData.id}
+            {/*#{cardData.id}<br/>*/}
             <div className="flip-card-inner">
                 <div className="flip-card-front">
                     {cardData.front}
@@ -20,11 +20,12 @@ function Card({cardData, showBack}) {
     }
 
     return (
-        <div className="basic">
-            <div className={showBack ? "flip-card flipped" : "flip-card"}>
+            <div className={showBack
+                   ? "flip-card flipped"
+                   : "flip-card"}
+            >
                 {content}
             </div>
-        </div>
     );
 }
 

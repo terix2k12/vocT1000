@@ -15,14 +15,18 @@ function App() {
     const [appState, setAppState] = useState("signout");
     const [activeBox, setActiveBox] = useState(-1);
     const [activeCard, setActiveCard] = useState(null);
-    const [allCards, setAllCards] = useState([]);
+
 
     useEffect(() => {}, []);
 
     function setBox(box) {
-        setActiveBox(box);
-        setAppState('boxes');
-        // updateTraining(box);
+        if(box === activeBox) {
+            setActiveBox(0);
+            setAppState("");
+        } else {
+            setActiveBox(box);
+            setAppState('boxes');
+        }
     }
 
     function handleKey(e) {
@@ -52,12 +56,11 @@ function App() {
     } else if( appState === "boxes" ){
         content = (<CardBox activeBox = {activeBox} />);
     } else if( appState === "allcards" ){
-        content = <CardList allCards={allCards}
-                            setAppState={setAppState}
+        content = <CardList setAppState={setAppState}
                             setActiveCard={setActiveCard}
         />
     } else { 
-        content = (<p>Hello user, select an action!</p>);
+        content = (<p>Welcome back, {user}!</p>);
     }
 
     return (
@@ -65,13 +68,12 @@ function App() {
                  onKeyUp={handleKey}
                  tabIndex={0}>
 
-            <Boxes activeBox={activeBox} setBox={setBox} />
+            <Boxes activeBox={activeBox} setBox={setBox} user={user} />
             <div className="content">
                  { content }
             </div>
             <Menu user={user} setUser={setUser}
                   setAppState={setAppState}
-                  setAllCards={setAllCards}
                   setActiveCard={setActiveCard}
             />
         </div>

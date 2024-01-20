@@ -2,7 +2,7 @@ import React from 'react';
 import './Menu.css';
 import {baseUrl} from './Tconfig';
 
-function Menu({user, setUser, setAppState, setAllCards, setActiveCard}) {
+function Menu({user, setUser, setAppState, setActiveCard}) {
 
     function sendLogout() {
         fetch(baseUrl + 'logout')
@@ -19,17 +19,11 @@ function Menu({user, setUser, setAppState, setAllCards, setActiveCard}) {
     }
 
     function showAllCards() {
-        fetch(baseUrl + 'card/between',
-            {credentials: "include"})
-            .then((response) => response.json())
-            .then((data) => {
-                    setAllCards(data);
-                    setAppState("allcards");
-            });
+         setAppState("allcards");
     }
 
     function getClass() {
-       return user === "" ? "activeMenuItem" : "inactiveMenuItem"
+       return user === "" ? "bottombox disabled" : "bottombox active"
     }
 
     return (
@@ -37,14 +31,14 @@ function Menu({user, setUser, setAppState, setAllCards, setActiveCard}) {
             <div className={ getClass() }
                 onClick={ showAllCards }
             >All Cards</div>
-            <div className={ getClass() }
+            <div className="bottombox active"
                 onClick={ sendLogout }>
                 { user === ""
                     ? "Login"
                     : "Logout" 
                 }
             </div>
-            <div className={ user=== "" ? "disabledMenuItem" : "inactiveMenuItem" }
+            <div className={ getClass() }
                 onClick={ () => {
                     setActiveCard({});
                     setAppState("adding")
