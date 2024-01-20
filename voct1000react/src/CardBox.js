@@ -71,7 +71,7 @@ function CardBox({activeBox}) {
             .then((data) => {
                 console.log("updateTraining " + data);
 
-                if (data) {
+                if (data.card) {
                     setActiveTraining(data);
                     updateCard(data.card);
                 } else {

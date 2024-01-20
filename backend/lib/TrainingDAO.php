@@ -48,7 +48,12 @@ function nextCard($idValue, $collId) {
     }
 
     mysqli_close($mysqli);
-    return $content[0];
+
+    if (count($content)) {
+        return $content[0];
+    } else {
+        return [];
+    }
 }
 
 function getTrainingById($idValue) {
