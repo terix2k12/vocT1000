@@ -1,0 +1,9 @@
+.loginform {
+    display: grid
+}
+
+.lbutton {
+    height: 60px;
+    margin: 10px;
+    width: 80px;
+}

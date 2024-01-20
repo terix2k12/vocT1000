@@ -1,6 +1,6 @@
 .menuBox {
-  /*background-color: blue;*/
-  background-color: #282c34;
+  background-color: black;
+  /*background-color: #282c34;*/
   flex-grow: 1;
 
   display: flex;
@@ -12,14 +12,15 @@
   padding-right: 5px;
 }
 
-.activeMenuItem {
-  /*width: 70px;*/
-  height: 60px;
-  background-color: #61dafb;
+.bottombox {
+  background-color: #f7f7f9;
 
   bottom: 0px;
 
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin-left: 5px;
@@ -28,31 +29,12 @@
   flex-grow: 1;
 }
 
-.inactiveMenuItem {
-  /*width: 70px;*/
-  height: 40px;
-  background-color: cadetblue;
-
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-
-  flex-grow: 1;
+.active {
+  height: 60px;
 }
 
-.disabledMenuItem {
-  /*width: 70px;*/
+.disabled {
   height: 40px;
   background-color: grey;
-
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  
-  flex-grow: 1;
-
+  color: darkgrey;
 }

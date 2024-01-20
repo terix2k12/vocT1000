@@ -1,17 +1,8 @@
-.basic {
-    background-color: antiquewhite;
-    color: #282c34;
-    padding: 30px;
-    border-radius: 10px;
-    margin: 3px;
-}
-
 .flip-card {
+    padding: 20px;
     background-color: transparent;
-    /*width: 300px;*/
-    height: 200px;
-    /*border: 1px solid #f1f1f1;*/
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    height: 150px;
+    perspective: 500px;
 }
 
 .flip-card-inner {
@@ -34,10 +25,16 @@
     height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    color: black;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flip-card-front {
-    background-color: #bbb;
+    background-color: antiquewhite;
 }
 
 .flip-card-back {

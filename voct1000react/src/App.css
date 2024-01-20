@@ -8,8 +8,8 @@
 }
 
 .content {
-  background-color: #282c34;
-
+  /*background-color: #282c34;*/
+  background-color: #000;
   flex-grow: 6;
 
 

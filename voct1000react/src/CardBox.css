@@ -12,19 +12,19 @@
 .demote {
 	height: 60px;
 	margin: 10px;
-	width: 180px;
+	width: 100px;
 }
 
 .promote {
 	height: 60px;
 	margin: 10px;
-	width: 180px;
+	width: 100px;
 }
 
 .flip {
-	height: 60px;
+	height: 40px;
 }
 
 .skip {
-	height: 60px;
+	height: 40px;
 }
