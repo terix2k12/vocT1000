@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-import {baseUrl} from './Tconfig';
 import "./Login.css"
 
-function Login({setUser, setAppState}) {
+function Login({config, setUser, setAppState}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
 
     function sendLogin() {
-        fetch(baseUrl + 'login',
+        fetch(config.baseUrl + 'login',
               {
                 method: "POST",
                 body: JSON.stringify({

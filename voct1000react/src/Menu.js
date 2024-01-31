@@ -1,11 +1,10 @@
 import React from 'react';
 import './Menu.css';
-import {baseUrl} from './Tconfig';
 
-function Menu({user, setUser, setAppState, setActiveCard}) {
+function Menu({config, user, setUser, setAppState, setActiveCard}) {
 
     function sendLogout() {
-        fetch(baseUrl + 'logout')
+        fetch(config.baseUrl + 'logout')
         .then((response) => response.json())
         .then((data) => {
             if(data.info === "Logout successful!") {

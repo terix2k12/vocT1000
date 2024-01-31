@@ -15,9 +15,23 @@ function App() {
     const [appState, setAppState] = useState("signout");
     const [activeBox, setActiveBox] = useState(-1);
     const [activeCard, setActiveCard] = useState(null);
+    const [config, setConfig] = useState();
 
-
-    useEffect(() => {}, []);
+    useEffect(() => {
+        fetch('./config.json', {    headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).catch( e => console.log(e))
+            .then((response) => {
+                return response.json();
+            })
+            .catch( e => console.log(e))
+            .then((config) => {
+                console.log("Loaded configuration" + config);
+                setConfig(config);
+            });
+    }, []);
 
     function setBox(box) {
         if(box === activeBox) {
@@ -50,13 +64,13 @@ function App() {
     if( appState === "loading") {
         content = (<p>Loading...</p>);
     } else if( appState === "signout" ) {
-        content = (<Login setUser={setUser} setAppState={setAppState} />);
+        content = (<Login config={config} setUser={setUser} setAppState={setAppState} />);
     } else if( appState === "adding" ) {
-        content = (<CardEditor activeCard={activeCard} />);
+        content = (<CardEditor config={config} activeCard={activeCard} />);
     } else if( appState === "boxes" ){
-        content = (<CardBox activeBox = {activeBox} />);
+        content = (<CardBox config={config} activeBox = {activeBox} />);
     } else if( appState === "allcards" ){
-        content = <CardList setAppState={setAppState}
+        content = <CardList config={config} setAppState={setAppState}
                             setActiveCard={setActiveCard}
         />
     } else { 
@@ -72,7 +86,7 @@ function App() {
             <div className="content">
                  { content }
             </div>
-            <Menu user={user} setUser={setUser}
+            <Menu config={config} user={user} setUser={setUser}
                   setAppState={setAppState}
                   setActiveCard={setActiveCard}
             />

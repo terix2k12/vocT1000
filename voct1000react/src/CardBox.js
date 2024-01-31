@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './CardBox.css';
 import Card from "./Card";
-import {baseUrl} from './Tconfig';
 
-function CardBox({activeBox}) {
+function CardBox({config, activeBox}) {
 
     const [showBack, setShowBack] = useState(false);
 
@@ -15,7 +14,7 @@ function CardBox({activeBox}) {
     const [activeTraining, setActiveTraining] = useState(initTraining);
 
     function promote() {
-        fetch(baseUrl + 'training/promote/' + activeTraining.id, {
+        fetch(config.baseUrl + 'training/promote/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -26,7 +25,7 @@ function CardBox({activeBox}) {
     }
 
     function demote() {
-        fetch(baseUrl + 'training/demote/' + activeTraining.id, {
+        fetch(config.baseUrl + 'training/demote/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -41,7 +40,7 @@ function CardBox({activeBox}) {
     }
 
     function skipCard() {
-        fetch(baseUrl + 'training/skip/' + activeTraining.id, {
+        fetch(config.baseUrl + 'training/skip/' + activeTraining.id, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -52,7 +51,7 @@ function CardBox({activeBox}) {
     }
 
     function updateCard(cardId) {
-        fetch(baseUrl + 'card/get/' + cardId, {
+        fetch(config.baseUrl + 'card/get/' + cardId, {
             credentials: 'include'
         })
             .then((response) => response.json())
@@ -65,7 +64,7 @@ function CardBox({activeBox}) {
     }
 
     function updateTraining(box) {
-        fetch(baseUrl + 'training/next/' + box,
+        fetch(config.baseUrl + 'training/next/' + box,
             {credentials: 'include'})
             .then((response) => response.json())
             .then((data) => {

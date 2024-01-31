@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {baseUrl} from "./Tconfig";
 
-function CardList( {setAppState, setActiveCard} ) {
+function CardList( {config, setAppState, setActiveCard} ) {
 
     const [cards, setCards] = useState([]);
     const [page, setPage] = useState(1);
@@ -14,7 +13,7 @@ function CardList( {setAppState, setActiveCard} ) {
     }, []);
 
     function loadCards() {
-        fetch(baseUrl + 'card/between',
+        fetch(config.baseUrl + 'card/between',
             {credentials: "include"})
             .then((response) => response.json())
             .then((data) => {

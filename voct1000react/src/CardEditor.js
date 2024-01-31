@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './CardEditor.css';
-import {baseUrl} from './Tconfig';
 
-function CardEditor({activeCard}) {
+function CardEditor({config, activeCard}) {
 
     const [front, setFront] = useState("");
     const [back, setBack] = useState("");
@@ -22,7 +21,7 @@ function CardEditor({activeCard}) {
     }, [activeCard]);
 
     function sendCard() {
-        fetch(baseUrl + 'card/save',
+        fetch(config.baseUrl + 'card/save',
               {
                 method: "POST",
                 body: JSON.stringify({
