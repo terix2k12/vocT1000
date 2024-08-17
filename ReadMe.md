@@ -4,9 +4,7 @@ A simple register for flash cards.
 
 # Development
 
-## Running
-
-To work with T-1000 locally run
+To start a local developer environment run:
 
 ```bash
 git checkout ...
@@ -26,7 +24,11 @@ Session cookies fall under the categorization of strictly necessary cookies unde
 
 
 # TODO
+	- BACKEND
+	- FRONTEND
 	- Infrastructure
+		- use license
+		- include frontend in docker-compose
 		- OPTIONS request shoud include cookie (else backend has to start new session every time)
 		- connect with github
 		- switch to typescript
@@ -40,11 +42,9 @@ Session cookies fall under the categorization of strictly necessary cookies unde
 		- api documentation and swagger
 		- setup a ci/cd for frontend pipeline and backendpipeline
 		- test unicode symbols in database...
-		 
-
-## Functions
-	- five bins
-	- nice and simple frontend
-	- promote / demote vocabluary
-	- add/edit vocabulary
-	- multiple users + language
+	- Functions
+		- five bins
+		- nice and simple frontend
+		- promote / demote vocabluary
+		- add/edit vocabulary
+		- multiple users + language
