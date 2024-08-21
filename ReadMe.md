@@ -19,28 +19,72 @@ cd voct1000react
 npm run start
 ```
 
+## Flyway and testdatabase
+
+```
+sudo docker-compose start t1000flyway
+```
+
+```
+sudo docker-compose run -e FLYWAY_COMMAND=info t1000flyway
+```
+
 ## Project
 https://www.php.net/manual/en/session.idpassing.php
 
 Session cookies fall under the categorization of strictly necessary cookies under the General Data Protection Regulation (GDPR), applicable in the European Union and the UK. Strictly necessary cookies like session cookies are exempt from the consent requirements underlined in the GDPR. Therefore, session cookies are GDPR compliant. 
 
 
+
+  https://profinit.eu/en/blog/build-once-deploy-many-in-react-dynamic-configuration-properties/
+
+    <script src="%PUBLIC_URL%/config.json"></script>
+    <script>
+      window.config = { baseUrl };
+    </script>
+
+      "homepage": "https://www.philippfonteyn.de/hindi",
+
+
+https://www.gnu.org/gnu/linux-and-gnu.html
+linux and kernel?
+
 # TODO
-	- Infrastructure
-		- OPTIONS request shoud include cookie (else backend has to start new session every time)
-		- connect with github
+	-functional
+	    - loading wheels
+		- import/export
+	    - woerter fuer kathrin laden
+		- second style iphone/android (buttons am boden)
+		- box counter display
+	    - logout are you sure?
+	    - list all cards
+	    	- with pagination
+		    - all cards search box
+		    - all cards dropbox, collection
+		- sound positive and negative feedback, plus mute option
+		- self registration
+		- manage languages
+
+	-nonfunctional
+		- router benutzen
+		- how to design for iphone?
+	    - toncifg as resource -> test!
+	    - bundle version at build time
+	    - set homepage in package, based on production or dev build...??
+		- rename frontend
 		- switch to typescript
-		- set up rest api (no .php in the end)
+		- skip function test; nocard left;
+	    - password hash and save
+	    - seperate cards into languages
+		- OPTIONS request shoud include cookie (else backend has to start new session every time)
+		- cookie lifetime
 		- postmancollection / restapi tests
 		- php junittests?
-		- sound positive and negative feedback, plus mute option
-		- react ui system.... bootstrap oder antd?
 		- react build into nginx....
 		- use prettier, lint and other typescript essentials
 		- api documentation and swagger
 		- setup a ci/cd for frontend pipeline and backendpipeline
-		- test unicode symbols in database...
-		 
+ 
 
 ## Functions
 	- five bins
