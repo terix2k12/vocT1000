@@ -4,9 +4,7 @@ A simple register for flash cards.
 
 # Development
 
-## Running
-
-To work with T-1000 locally run
+To start a local developer environment run:
 
 ```bash
 git checkout ...
@@ -72,6 +70,10 @@ linux and kernel?
 	    - bundle version at build time
 	    - set homepage in package, based on production or dev build...??
 		- rename frontend
+		- use license
+		- include frontend in docker-compose
+		- OPTIONS request shoud include cookie (else backend has to start new session every time)
+		- connect with github
 		- switch to typescript
 		- skip function test; nocard left;
 	    - password hash and save
@@ -83,8 +85,7 @@ linux and kernel?
 		- react build into nginx....
 		- use prettier, lint and other typescript essentials
 		- api documentation and swagger
-		- setup a ci/cd for frontend pipeline and backendpipeline
- 
+		- setup a ci/cd for frontend pipeline and backendpipeline 
 
 ## Functions
 	- five bins
@@ -92,3 +93,4 @@ linux and kernel?
 	- promote / demote vocabluary
 	- add/edit vocabulary
 	- multiple users + language
+	- test unicode symbols in database...
